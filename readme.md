@@ -3,7 +3,7 @@
 #### 2020/05/01
 
 ### Build from git
-[Phylonium](https://github.com/EvolBioInf/phylonium) needs to be compiled from the github repository. As we do not have sudo rights on the cluster, this requires a mix of conda and installed modules. Once GCC in Anaconda is updated to 8.2.0 this should no longer be necessary.
+[Phylonium](https://github.com/EvolBioInf/phylonium) needs to be compiled from the github repository. As we do not have sudo rights on the cluster, this requires a mix of conda and installed modules. Once GCC in Anaconda is updated to 8.2.0 this should no longer be necessary. The following should be run line-by-line in the shell, answering yes to dependencies and installs.
 
 ```bash 
 module load anaconda3/personal
@@ -44,7 +44,6 @@ seqs <- read.FASTA("./your_input_multifasta.fas")
 
 # cant have / or | in filenames
 labs <- gsub("\\/", "_",gsub("\\|", "_", labels(seqs)))
-
 names(seqs) <- labs
 
 # progress bar for loop
@@ -57,7 +56,7 @@ write.FASTA(seqs[i], paste0(names(seqs)[i], ".fas"))
 ```
 
 ### Shell script for qsub
-As phylonium is installed locally you will need to copy the directory to `$TEMPDIR` on the compute node to use the command. This script copies and runs on all `.fas` files in the current directory.
+As phylonium is installed locally you will need to copy the directory to `$TEMPDIR` on the compute node to use the command. This script copies and runs on all `.fas` files in the current directory. Something similar to the following should be saved as a `.sh` or `.pbs` shell script.
 ```bash
 #PBS -S /bin/bash
 #PBS -N matrix
