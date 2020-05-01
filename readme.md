@@ -1,8 +1,8 @@
 ## Phylonium on HPC
-##### David Jorgensen 
-###### 2020/05/01
+#### David Jorgensen 
+#### 2020/05/01
 
-#### Build from git
+### Build from git
 [Phylonium](https://github.com/EvolBioInf/phylonium) needs to be compiled from the github repository. As we do not have sudo rights on the cluster, this requires a mix of conda and installed modules. Once GCC in Anaconda is updated to 8.2.0 this should no longer be necessary.
 
 ```bash 
@@ -11,10 +11,10 @@ module load anaconda3/personal
 conda create -n phylonium_build
 source activate phylonium-build
 
-conda install gsl automake git
+conda install gsl automake git gxx_linux-64
 
 #this lib is the reason we need to use conda
-conda install bioconda -c libdivsufsort
+conda install -c bioconda libdivsufsort
 
 #need to export the most recent gcc version installed on the cluster
 export CC=/apps/gcc/8.2.0/bin/gcc
@@ -32,7 +32,7 @@ source deactivate phylonium-build
 ```
 After this build is complete you should have an executable 'phylonium' in /phylonium/src/ which can be run outside of this conda environment
 
-#### Format of sequences
+### Format of sequences
 The program requires each sequence used to be in a separate fasta file. This could be carried out with `awk` in bash more efficiently but I have used the following R code.
 
 ```R
@@ -56,7 +56,7 @@ write.FASTA(seqs[i], paste0(names(seqs)[i], ".fas"))
 }
 ```
 
-#### Shell script for qsub
+### Shell script for qsub
 As phylonium is installed locally you will need to copy the directory to `$TEMPDIR` on the compute node to use the command. This script copies and runs on all `.fas` files in the current directory.
 ```bash
 #PBS -S /bin/bash
